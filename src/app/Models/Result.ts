@@ -1,4 +1,4 @@
-export class Game {
+export class Result {
   gameTime: Date;
   winner: string;
   constructor() {}
