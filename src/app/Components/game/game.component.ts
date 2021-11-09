@@ -11,14 +11,14 @@ import { GameService } from '../../Services/game.service';
 })
 export class GameComponent implements OnInit {
   heroList: Hero[] = [
-    { heroID: 5, heroName: 'Dion', minDice: 1, maxDice: 6, uses: 3 },
-    { heroID: 5, heroName: 'Anh', minDice: 1, maxDice: 3, uses: 3 },
+    // { heroID: 5, heroName: 'Dion', minDice: 1, maxDice: 6, uses: 3 },
+    // { heroID: 5, heroName: 'Anh', minDice: 1, maxDice: 3, uses: 3 },
   ];
   villanList: Villan[] = [
-    { villanID: 2, villanName: 'Shano', attackPoints: 5 },
-    { villanID: 3, villanName: 'NotBad', attackPoints: 5 },
+    // { villanID: 2, villanName: 'Shano', attackPoints: 5 },
+    // { villanID: 3, villanName: 'NotBad', attackPoints: 5 },
   ];
-  resultList: Result[] = [{ gameTime: new Date(), winner: 'Villan Wins' }];
+  resultList: Result[] = []; //[{ gameTime: new Date(), winner: 'Villan Wins' }];
   selectedVillan: Villan;
   selectedHero: Hero;
   villansLost: boolean = false;
@@ -34,19 +34,21 @@ export class GameComponent implements OnInit {
   StartBtn(): void {
     //disables startBtn
     this.startBtnDisabled = true;
-    console.log(this.heroList);
 
     //loads heroes
     this._gameService
       .getAllHeroes()
       .subscribe((hero) => (this.heroList = hero));
-    console.log(this.heroList);
 
     //loads villians
     this._gameService
-    .getAllVillans()
-    .subscribe((villan) => (this.villanList  = villan));
-  console.log(this.heroList);
+      .getAllVillans()
+      .subscribe((villan) => (this.villanList = villan));
+
+    //loads resultList
+    this._gameService
+      .getAllGames()
+      .subscribe((results) => (this.resultList = results));
   }
 
   RollBtn(): void {
@@ -62,9 +64,20 @@ export class GameComponent implements OnInit {
     this.selectedVillan = null;
     this.villansLost = this.chkVillansLost();
     this.heroesLost = this.chkHeroLost();
+
     if (this.villansLost === true || this.heroesLost === true) {
-      this.resultWinner =
-        this.villansLost === false ? 'Villans Won' : 'Heroes Won';
+      let gameResult: string;
+
+      gameResult = this.villansLost === false ? 'Villans Won' : 'Heroes Won';
+      this.resultWinner = gameResult;
+
+      const addResult = new Result();
+      addResult.gameTime = new Date();
+      addResult.winner = gameResult;
+
+      this._gameService.postGame(addResult);
+
+      this.startBtnDisabled = false;
     }
   }
 
