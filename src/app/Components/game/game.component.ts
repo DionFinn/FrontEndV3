@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../Models/Hero';
 import { Villan } from '../../Models/Villan';
-import { Game } from '../../Models/Game';
+import { Result } from '../../Models/Result';
 import { GameService } from '../../Services/game.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class GameComponent implements OnInit {
     { villanID: 2, villanName: 'Shano', attackPoints: 5 },
     { villanID: 3, villanName: 'NotBad', attackPoints: 5 },
   ];
-  gameList: Game[] = [{ gameTime: new Date(), winner: 'Villan Wins' }];
+  resultList: Result[] = [{ gameTime: new Date(), winner: 'Villan Wins' }];
   selectedVillan: Villan;
   selectedHero: Hero;
   villansLost: boolean = false;
@@ -27,7 +27,7 @@ export class GameComponent implements OnInit {
   rollBtnDisabled: boolean = true;
   resultWinner: string;
 
-  constructor(private _heroService: GameService) {}
+  constructor(private _gameService: GameService) {}
 
   ngOnInit() {}
 
@@ -36,13 +36,17 @@ export class GameComponent implements OnInit {
     this.startBtnDisabled = true;
     console.log(this.heroList);
 
-    this._heroService
+    //loads heroes
+    this._gameService
       .getAllHeroes()
       .subscribe((hero) => (this.heroList = hero));
     console.log(this.heroList);
 
-    //loads heroes
     //loads villians
+    this._gameService
+    .getAllVillans()
+    .subscribe((villan) => (this.villanList  = villan));
+  console.log(this.heroList);
   }
 
   RollBtn(): void {
