@@ -1,0 +1,23 @@
+.selected {
+  background-color: #a0fc63 !important;
+  color: rgb(10, 9, 9);
+  flex-wrap: wrap;
+  outline: auto;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 50%;
+  background-color: darkgray;
+}
+.gameRow {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.enemy {
+  background-color: #fc6363 !important;
+  color: rgb(10, 9, 9);
+  flex-wrap: wrap;
+  outline: auto;
+}

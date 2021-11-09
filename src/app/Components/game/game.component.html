@@ -1,0 +1,33 @@
+<button (click)="StartBtn()" [disabled]="startBtnDisabled">Start</button>
+<p>Select Hero</p>
+<div class="gameRow">
+  <app-hero *ngFor="let hero of heroList" [hero]="hero" (click)="onSelectHero(hero)"
+      [class.selected]="hero === selectedHero">
+  </app-hero>
+</div>
+<hr>
+
+<p>Select Villan</p>
+<div class="gameRow">
+<app-villan *ngFor="let villan of villanList" [villan]="villan" (click)="onSelectVillan(villan)"
+    [class.enemy]="villan === selectedVillan" [class.disabled]="villan.AttackPoints === 0">
+</app-villan>
+</div>
+
+<br>
+<p>
+<label *ngIf="selectedHero">
+  {{selectedHero.heroName}} 
+</label>
+attacks
+<label *ngIf="selectedVillan">
+{{selectedVillan.VillanName}}
+</label>
+
+</p>
+<p>{{resultWinner}}</p>
+
+<button (click)="RollBtn()" [disabled]= "!(selectedHero && selectedVillan)" >Attack</button>
+<hr>
+
+<app-result *ngFor="let result of resultList" [result]="result"></app-result>
