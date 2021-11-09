@@ -27,8 +27,12 @@ export class GameService {
     // return aa;
   }
 
-  postGame(game: Game): Observable<Game> {
-    return this._http.post<Game>(this.baseUrl, game);
+  // postGame1(game: Game): Observable<Game> {
+  //   return this._http.post<Game>(this.baseUrl, game);
+  // }
+
+  postGame(game: Game): void {
+    this._http.post<Game>(this.baseUrl, game);
   }
 
   public getAllGames(): Observable<Game[]> {

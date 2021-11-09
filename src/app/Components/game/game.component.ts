@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../Models/Hero';
 import { Villan } from '../../Models/Villan';
 import { Game } from '../../Models/Game';
-import { Result } from '../../Models/Result';
-import { HeroService } from '../../Services/hero.service';
+import { GameService } from '../../Services/game.service';
 
 @Component({
   selector: 'app-game',
@@ -11,8 +10,7 @@ import { HeroService } from '../../Services/hero.service';
   styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
-  heroList: Hero[]
-   = [
+  heroList: Hero[] = [
     { heroID: 5, heroName: 'Dion', minDice: 1, maxDice: 6, uses: 3 },
     { heroID: 5, heroName: 'Anh', minDice: 1, maxDice: 3, uses: 3 },
   ];
@@ -20,7 +18,7 @@ export class GameComponent implements OnInit {
     { villanID: 2, villanName: 'Shano', attackPoints: 5 },
     { villanID: 3, villanName: 'NotBad', attackPoints: 5 },
   ];
-  resultList: Game[] = [{ gameTime: new Date(), winner: 'Villan Wins' }];
+  gameList: Game[] = [{ gameTime: new Date(), winner: 'Villan Wins' }];
   selectedVillan: Villan;
   selectedHero: Hero;
   villansLost: boolean = false;
@@ -28,9 +26,8 @@ export class GameComponent implements OnInit {
   startBtnDisabled: boolean = false;
   rollBtnDisabled: boolean = true;
   resultWinner: string;
-  aa: HeroService;
 
-  constructor(private _heroService: HeroService) {}
+  constructor(private _heroService: GameService) {}
 
   ngOnInit() {}
 
@@ -39,7 +36,9 @@ export class GameComponent implements OnInit {
     this.startBtnDisabled = true;
     console.log(this.heroList);
 
-    this._heroService.getAllHeroes().subscribe((hero) => (this.heroList = hero));
+    this._heroService
+      .getAllHeroes()
+      .subscribe((hero) => (this.heroList = hero));
     console.log(this.heroList);
 
     //loads heroes
