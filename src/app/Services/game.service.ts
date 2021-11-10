@@ -10,8 +10,10 @@ import { Villan } from '../Models/Villan';
   providedIn: 'root',
 })
 export class GameService {
-  readonly baseUrl: string = 'https://dionfinnerty.somee.com/ProjectHero';
-
+  readonly baseUrl: string = 'https://my-json-server.typicode.com/DionFinn/FakeAPI/';
+  //'https://dionfinnerty.somee.com/ProjectHero'
+  //'https://my-json-server.typicode.com/DionFinn/FakeAPI/'
+  //switching between json fake api change villan endpoint to "villain", i cant spell for shit
   readonly headerDict = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -31,7 +33,7 @@ export class GameService {
 
   public getAllVillans(): Observable<Villan[]> {
     console.log('getAllVillans()');
-    return this._http.get<Villan[]>(this.baseUrl + '/villan');
+    return this._http.get<Villan[]>(this.baseUrl + '/villain');
     // console.log(aa);
     // return aa;
   }
